@@ -1,0 +1,991 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>MLB Popout jQuery Plugin</title>
+    <link rel="icon" type="image/png" href="data:image/png;base64,AAABAAEAEBAAAAEAIABoBAAAFgAAACgAAAAQAAAAIAAAAAEAIAAAAAAAAAQAABMLAAATCwAAAAAAAAAAAAD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8AFgDL/xUAy/8WAMv/FgDL/xUAy/8WAMr/FgDL/xYAy/8VAMv/FgDL/xYAy/8WAMv/////AP///wD///8A////ABMAzv8VAM//FQDO/xQAz/8UAM7/FADP/xQAzv8UAM//FADO/xMAz/8VAM//EwDP/////wD///8A////AP///wASANP/EwDU/xIA0/8TANT/EgDT/xEA1P8SANP/EgDT/xIA0/8SANT/EwDT/xIA0/////8A////AP///wD///8AEADZ/xEA2P8QANj/EADY/xAA2P8RANn/EADZ/xAA2P8PANj/EADY/xEA2P8RANn/////AP///wD///8A////AA0A3v8OAN3/DgDd/w0A3f8OAN7/DgDe/w4A3v8OAN3/DgDe/w0A3f8OAN7/DQDe/////wD///8A////AP///wAMAOP/CwDk/wsA5P8LAOP/CwDj/wsA4/8MAOP/CwDj/wwA4/8MAOP/DADj/wsA4/////8A////AP///wD///8ACgDp/wkA6f8JAOn/CgDp/wkA6f8KAOn/CQDp/wkA6f8KAOn/CgDp/wkA6f8JAOn/////AP///wD///8A////AAcA7v8HAO//BwDu/wcA7v8GAO7/BwDu/wcA7v8HAO//BwDu/wcA7/8HAO7/BwDv/////wD///8A////AP///wAFAPT/BAD0/wUA8/8EAPP/BADz/wUA8/8EAPP/BQD0/wQA8/8FAPT/BQD0/wUA9P////8A////AP///wD///8AAwD4/wQA9/8DAPn/AwD5/wMA+f8EAPj/AwD4/wMA+f8DAPj/AwD5/wQA+P8DAPn/////AP///wD///8A////AAEA/P8BAPz/AQD8/wEA/P8BAPz/AQD8/wEA/P8BAPz/AQD8/wEA/P8BAPz/AQD8/////wD///8A////AP///wAAAP//AAD//wAA//8AAP//AAD//wAA//8AAP//AAD//wAA//8AAP//AAD//wAA//////8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A//8AAP//AADAAwAAwAMAAMADAADAAwAAwAMAAMADAADAAwAAwAMAAMADAADAAwAAwAMAAMADAAD//wAA//8AAA==" />
+    <style>
+
+        .clearfix:after { content: "."; display: block; height: 0; clear: both; visibility: hidden; }
+
+        body { background: #e3e3e4; color: #000; font-family: "Helvetica", "Helvetica Neue", "Arial", san-serif; font-size: 12px; margin: 0; padding: 0; }
+
+        header { border-bottom: 1px solid #ccc; background: #f3f3f2; padding: 28px; }
+        header ul { list-style: none; float: right; }
+        header ul li { float: left; padding: 0 14px; border-right: 1px solid #ccc; height: 20px; line-height: 20px; }
+        header ul li:last-child { border-right: 0; }
+
+        #logo-box {
+            display: block;
+            float: left;
+            height: 24px;
+            width: 24px; margin: 9px 0;
+            background: red;
+            background: -webkit-gradient(linear, 0 0, 0 100%, from(#ff0000), color-stop(100%, #ea0000));
+            background: -moz-linear-gradient(top, #ff0000, #ea0000 100%);
+            background: -ms-linear-gradient(top, #ff0000, #ea0000 100%);
+            background: -o-linear-gradient(top, #ff0000, #ea0000 100%);
+            background: linear-gradient(top, #ff0000, #ea0000 100%);
+        }
+
+        #download {
+            font-family: "Helvetica", "Helvetica Neue", "Arial", san-serif;
+            font-weight: 100;
+            font-size: 12px;
+            color: white;
+            cursor: pointer;
+            background: #242526;
+            border: 1px solid black;
+            padding: 10px 20px;
+            margin: 7px 0;
+            border: 0;
+            outline: none;
+        }
+
+        #download:hover {
+            background: #282828;
+        }
+
+        #download:active {
+            background: #333;
+        }
+
+        h1 { float: left; padding: 0 14px; font-size: 30px; font-weight: 100; letter-spacing: -1px; line-height: 35px; margin: 4px 0; }
+        h2 { font-size: 16px; font-weight: 800; margin: 0 0 14px 0; padding-bottom: 7px; border-bottom: 1px solid #ccc; }
+        a { font-weight: 800; color: #000; }
+
+        section { border: 1px solid #ccc; background: #fff; margin: 14px; padding: 28px; }
+        section p {margin: 14px 0;}
+
+        .sample-popout { margin: 28px 14px; }
+
+        .b {
+            width: 150px;
+            cursor: pointer;
+            height: 35px;
+            line-height: 35px;
+            background: #cccccc;
+            background: -webkit-gradient(linear, 0 0, 0 100%, from(#ffffff), color-stop(100%, #cccccc));
+            background: -moz-linear-gradient(top, #ffffff, #cccccc 100%);
+            background: -ms-linear-gradient(top, #ffffff, #cccccc 100%);
+            background: -o-linear-gradient(top, #ffffff, #cccccc 100%);
+            background: linear-gradient(top, #ffffff, #cccccc 100%);
+            -webkit-border-radius: 6px;
+            -moz-border-radius: 6px;
+            border-radius: 6px;
+            border: 1px solid #d6d6d6;
+            -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
+            -webkit-box-shadow: inset 0px 1px 0px 0px rgba(255, 255, 255, 0.25);
+            -moz-box-shadow: inset 0px 1px 0px 0px rgba(255, 255, 255, 0.25);
+            box-shadow: inset 0px 1px 0px 0px rgba(255, 255, 255, 0.25);
+            color: #000000;
+            text-align: center;
+            text-transform: uppercase;
+            font-weight: 800;
+            font-size: 12px;
+            -webkit-perspective: 1000;
+            -moz-perspective: 1000;
+            -ms-perspective: 1000;
+            text-shadow: 0 1px rgba(255, 255, 255, 0.9);
+            -webkit-user-select: none;
+            -khtml-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            -moz-box-sizing: border-box;
+            box-sizing: border-box;
+        }
+        .b a {
+          display: block;
+          color: #000000;
+          height: 100%;
+          padding: 0px 14px;
+        }
+          
+        .b:active, .b.active {
+            background: #797979;
+            background: -webkit-gradient(linear, 0 0, 0 100%, from(#B6B6B6), color-stop(100%, #797979));
+            background: -moz-linear-gradient(top, #B6B6B6, #797979 100%);
+            background: -ms-linear-gradient(top, #B6B6B6, #797979 100%);
+            background: -o-linear-gradient(top, #B6B6B6, #797979 100%);
+            background: linear-gradient(top, #B6B6B6, #797979 100%);
+            color: #FFF;
+            text-shadow: 0 1px rgba(0, 0, 0, 0.9);
+        }
+        
+        /*Code Styles*/
+
+        /**
+        * prism.js default theme for JavaScript, CSS and HTML
+        * Based on dabblet (http://dabblet.com)
+        * @author Lea Verou
+        */
+
+       code[class*="language-"],
+       pre[class*="language-"] {
+         color: black;
+         text-shadow: 0 1px white;
+         font-family: Monaco, Menlo, Consolas, "Courier New", monospace;
+         direction: ltr;
+         text-align: left;
+         white-space: pre;
+         word-spacing: normal;
+
+         -moz-tab-size: 4;
+         -o-tab-size: 4;
+         tab-size: 4;
+
+         -webkit-hyphens: none;
+         -moz-hyphens: none;
+         -ms-hyphens: none;
+         hyphens: none;
+       }
+
+       pre[class*="language-"]::-moz-selection, pre[class*="language-"] ::-moz-selection,
+       code[class*="language-"]::-moz-selection, code[class*="language-"] ::-moz-selection {
+         text-shadow: none;
+         background: #b3d4fc;
+       }
+
+       pre[class*="language-"]::selection, pre[class*="language-"] ::selection,
+       code[class*="language-"]::selection, code[class*="language-"] ::selection {
+         text-shadow: none;
+         background: #b3d4fc;
+       }
+
+       @media print {
+         code[class*="language-"],
+         pre[class*="language-"] {
+           text-shadow: none;
+         }
+       }
+
+       /* Code blocks */
+       pre[class*="language-"] {
+         padding: 1em;
+         margin: .5em ;
+         overflow: auto;
+       }
+
+       :not(pre) > code[class*="language-"],
+       pre[class*="language-"] {
+         background: #f5f2f0;
+       }
+
+       /* Inline code */
+       :not(pre) > code[class*="language-"] {
+         padding: .1em;
+         border-radius: .3em;
+       }
+
+       .token.comment,
+       .token.prolog,
+       .token.doctype,
+       .token.cdata {
+         color: slategray;
+       }
+
+       .token.punctuation {
+         color: #999;
+       }
+
+       .namespace {
+         opacity: .7;
+       }
+
+       .token.property,
+       .token.tag,
+       .token.boolean,
+       .token.number {
+         color: #905;
+       }
+
+       .token.selector,
+       .token.attr-name,
+       .token.string {
+         color: #690;
+       }
+
+       .token.operator,
+       .token.entity,
+       .token.url,
+       .language-css .token.string,
+       .style .token.string {
+         color: #a67f59;
+         background: hsla(0,0%,100%,.5);
+       }
+
+       .token.atrule,
+       .token.attr-value,
+       .token.keyword {
+         color: #07a;
+       }
+
+
+       .token.regex,
+       .token.important {
+         color: #e90;
+       }
+
+       .token.important {
+         font-weight: bold;
+       }
+
+       .token.entity {
+         cursor: help;
+       }
+
+        .pre-scrollable {
+            max-height: 340px;
+            overflow-y: scroll;
+        }
+    </style>
+    <link type="text/css" rel="stylesheet" href="css/mlb-popout.css">
+</head>
+
+<body>
+
+    <header class="clearfix">
+        <div id="logo-box"></div>
+        <h1>MLB Popout jQuery Plugin</h1>
+        <ul>
+            <li>Version 1.0</li>
+            <li>Last Updated 8/14/13</li>
+            <li><a href="http://www.twitter.com/@Cornally/">@Cornally</a></li>
+        </ul>
+    </header>
+
+    <section id="introduction">
+        <h2>Introduction</h2>
+        <p>Popouts are used to provide additional information or a subset of task-specific features that may be actionable or simply informative.  The major difference between tooltips and popouts is the trigger event and the volume of information that can be displayed. Popouts are trigged by a click/touch and can display larger amounts of information as a result.  They are closed when the trigger is clicked for a second time, the body of the page is clicked (area outside of active popout), or the "ESC" key is pressed.</p>
+        <p>Version 1.0+ of the plugin requires <a href="http://jquery.com/download/" target="_new">jQuery 1.7+</a>, <a href="http://jqueryui.com/" target="_new">jQuery UI 1.8+</a> and <a href="http://modernizr.com/" target="_new">Modernizr</a> for feature detection of translate3d css transform support.</p>
+        
+        <!--<div id="download" class="b">Download Library</div>-->
+        
+    </section>
+
+    <section id="basic-usage">
+        <h2>Basic Usage</h2>
+        <h3>Libraries</h3>
+
+        <pre><code class="language-markup">&lt;link type="text/css" rel="stylesheet" href="mlb-popout.css">
+&lt;script src="mlb-popout.js">&lt;/script></code></pre>
+
+        <h3>HTML</h3>
+        <pre><code class="language-markup">&lt;div id="sample-button">
+    Sample Button
+&lt;/div></code></pre>
+
+        <h3>Javascript</h3>
+        <pre><code class="language-javascript">$('#sample-triggering-element').popout({ ... });</code></pre>
+
+        <p>After a popout is generated, a separate div is created with a 'popout' class and is attached at the bottom of the DOM by default.  The contents of the popout are specified on instantiation but can be updated by calling the 'sContent' option on the original element and specifying updated contents.  For best results, style your triggering element with the 'active' class that is added when a popout is made visible through a pointer interaction.</p>
+
+        <h3>Select all instances of the plugin with the ':mlb-popout' psuedo-selector</h3>
+        <pre><code class="language-javascript">$(':mlb-popout').popout('destroy');</code></pre>
+    </section>
+
+    <section id="optional-parameters">
+        <h2>Options</h2>
+        <p>Multiple options can be passed in when calling a new instance of a toggle switch.  Some options can be modified after instantiation.</p>
+
+        <h3>sName</h3>
+        <p>Assign a name to the popout on creation.  This must be unique as an id is generated for the new popout from this parameter.  If a name is not provided, incremental numbers are assigned.</p>
+        <i>Default: '1'</i>
+        <pre><code class="language-javascript">$('#trigger').popout( { 'sName' : 'more-info'  } );</code></pre>
+        <div class="b sample-popout" id="sample-1">Launch Popout</div>
+        
+        <h3>asClasses</h3>
+        <p>Assign additional classes to the popout on creation.</p>
+        <i>Default: null</i>
+        <pre><code class="language-javascript">$('#trigger').popout( { 'asClasses' : [ 'extra-class-1' , 'extra-class-2' ]  } );</code></pre>
+
+        <h3>sContent</h3>
+        <p>Pass a string of text, html, or a jQuery object into this parameter to generate the popout's contents</p>
+        <i>Default: 'Please add content to your popout.'</i>
+        <pre><code class="language-javascript">$('#trigger').popout( { 'sContent' : $('&lt;span>').addClass('awesome').html('This example was generated with an object.') } );</code></pre>
+        <div class="b sample-popout" id="sample-2">Launch Popout</div>
+
+        <h3>bAnimate</h3>
+        <p>Turn animation on or off for modern browsers (Chrome, Safari, Opera, Firefox and IE10 +).  If 'Modernizr.csstransforms3d' does not pass, animation is not utilized. </p>
+        <i>Default: true</i>
+        <pre><code class="language-javascript">$('#trigger').toggleswitch( { 'bAnimate' : false } );</code></pre>
+        <div class="b sample-popout" id="sample-3">Launch Popout</div>
+
+        <h3>bFixedWrapper</h3>
+        <p>If your popout trigger element is positioned inside of a fixed position element (position: fixed;), set this flag to true to ensure accurate calculation of the popout's Y offset.</p>
+        <i>Default: false</i>
+        <pre><code class="language-javascript">$('#trigger').popout( { 'bFixedWrapper' : false  } );</code></pre>
+
+        <h3>sWidth</h3>
+        <p>Supply custom pixel, em or % width for your popout.  For the consistent results, supply a width to ensure your popout is positioned correctly.  Reflowing content within a popout may cause the dimensions to change if a width is not specified.  Another option is to style your popout in an external stylesheet by supplying a static id with the "sName" configuration option.</p>
+        <i>Default: "auto"</i>
+        <pre><code class="language-javascript">$('#trigger').popout( { 'sWidth' : '50%'  } );</code></pre>
+        <div class="b sample-popout" id="sample-5">Launch Popout</div>
+
+        <h3>sHeight</h3>
+        <p>Supply custom pixel, em or % height for your popout</p>
+        <i>Default: "auto"</i>
+        <pre><code class="language-javascript">$('#trigger').popout( { 'sHeight' : '200px'  } );</code></pre>
+        <div class="b sample-popout" id="sample-6">Launch Popout</div>
+
+        <h3>sAppendTo</h3>
+        <p>Supply custom location to append popout.  This is useful for keeping the DOM uncluttered if you're attaching/removing elements frequently.</p>
+        <i>Default: "body"</i>
+        <pre><code class="language-javascript">$('#trigger').popout( { 'sAppendTo' : '#popout-container'  } );</code></pre>
+        <div class="b sample-popout" id="sample-7">Launch Popout</div>
+
+        <h3>fnInitComplete</h3>
+        <p>Supply function to be called on completion of popout creation.  This is useful for binding contents within your popout.</p>
+        <i>Default: null</i>
+        <pre><code class="language-javascript">$('#trigger').popout( { 'fnInitComplete' : function(){ alert('Popout initialized successfully!'); }  } );</code></pre>
+        <div class="b sample-popout" id="sample-8">Launch Popout</div>
+        
+        <h3>fnOnShow</h3>
+        <p>Supply function to be called when a popout is shown/opened</p>
+        <i>Default: null</i>
+        <pre><code class="language-javascript">$('#trigger').popout( { 'fnOnShow' : function(){ alert('Popout opened') }  } );</code></pre>
+        <div class="b sample-popout" id="sample-9">Launch Popout</div>
+
+        <h3>fnOnHide</h3>
+        <p>Supply function to be called when a popout is hidden/closed</p>
+        <i>Default: null</i>
+        <pre><code class="language-javascript">$('#trigger').popout( { 'fnOnHide' : function(){ alert('Popout closed') }  } );</code></pre>
+        <div class="b sample-popout" id="sample-10">Launch Popout</div>
+
+    </section>
+
+    <section id="methods">
+        <h2>Methods</h2>
+
+        <h3>position</h3>
+        <p>Calculate where the popout should be drawn based on the position of the triggering element as well as the size if 'sWidth' and 'sHeight' are not specified.  By default, this is bound to browser resize, device orientation change and on initial creation of a popout.</p>
+        <pre><code class="language-javascript">$('#trigger').popout('position');</code></pre>
+        
+        <h3>hide</h3>
+        <p>Close all popouts.  This is useful when triggering visibility of other UI elements in the interest of preventing collisions/overlapping.</p>
+        <pre><code class="language-javascript">$('#trigger').popout('hide');</code></pre>
+        
+        <h3>destroy</h3>
+        <p>Remove all traces of an instance of a popout</p>
+        <pre><code class="language-javascript">$('#trigger').popout('destroy');</code></pre>
+
+    </section>
+
+   <!-- <section id="callbacks">
+        <h2>Callbacks</h2>
+
+        <h3>toggleswitchchange</h3>
+        <p>This event is fired when a toggleswitch instance changes value.</p>
+        <pre><code class="language-javascript">$('select').on('toggleswitchchange' , function(){
+
+    //Do stuff
+    alert('Do stuff');
+
+});
+</code></pre>
+
+        <div class="sample-toggleswitch" id="toggleswitch-6"><select><option value="off">Off</option><option value="on">On</option></select></div>
+
+    </section>-->
+
+    <section id="Styling">
+        <h2>Styling</h2>
+        <p>The popout plugin's styles have been generated from a single <a href="http://www.sass-lang.com" target="_new">SASS</a> (mlb-popout.scss) file.  If the triggering element is closer to the top or middle of the viewport, the popout is generated below.  If the triggering element is closer to the bottom of the viewport, the popout is generated above.  There are separate styles for each behavior.</p>
+    </section>
+
+    <section id="Change Log">
+        <h2>Future Enhancements</h2>
+        <ul>
+            <li>Modify hide & destroy methods to work on all instances if no element is passed as an argument.</li>
+            <li>Add examples to documentation.</li>
+        </ul>
+        <h2>Recent Fixes</h2>
+        <ul>
+            <li>Popout position is calculated right before display to prevent positioning errors due to internal content reflow.</li>
+        </ul>
+    </section>
+    
+    <div id="popout-container"></div>
+
+    <script>
+        /************************************************
+                Begin prism-core.js
+        ********************************************** */
+
+           /**
+            * Prism: Lightweight, robust, elegant syntax highlighting
+            * MIT license http://www.opensource.org/licenses/mit-license.php/
+            * @author Lea Verou http://lea.verou.me
+            */
+
+           (function(){
+
+           // Private helper vars
+           var lang = /\blang(?:uage)?-(?!\*)(\w+)\b/i;
+
+           var _ = self.Prism = {
+             util: {
+               type: function (o) {
+                 return Object.prototype.toString.call(o).match(/\[object (\w+)\]/)[1];
+               },
+
+               // Deep clone a language definition (e.g. to extend it)
+               clone: function (o) {
+                 var type = _.util.type(o);
+
+                 switch (type) {
+                   case 'Object':
+                     var clone = {};
+
+                     for (var key in o) {
+                       if (o.hasOwnProperty(key)) {
+                         clone[key] = _.util.clone(o[key]);
+                       }
+                     }
+
+                     return clone;
+
+                   case 'Array':
+                     return o.slice();
+                 }
+
+                 return o;
+               }
+             },
+
+             languages: {
+               extend: function (id, redef) {
+                 var lang = _.util.clone(_.languages[id]);
+
+                 for (var key in redef) {
+                   lang[key] = redef[key];
+                 }
+
+                 return lang;
+               },
+
+               // Insert a token before another token in a language literal
+               insertBefore: function (inside, before, insert, root) {
+                 root = root || _.languages;
+                 var grammar = root[inside];
+                 var ret = {};
+
+                 for (var token in grammar) {
+
+                   if (grammar.hasOwnProperty(token)) {
+
+                     if (token == before) {
+
+                       for (var newToken in insert) {
+
+                         if (insert.hasOwnProperty(newToken)) {
+                           ret[newToken] = insert[newToken];
+                         }
+                       }
+                     }
+
+                     ret[token] = grammar[token];
+                   }
+                 }
+
+                 return root[inside] = ret;
+               },
+
+               // Traverse a language definition with Depth First Search
+               DFS: function(o, callback) {
+                 for (var i in o) {
+                   callback.call(o, i, o[i]);
+
+                   if (_.util.type(o) === 'Object') {
+                     _.languages.DFS(o[i], callback);
+                   }
+                 }
+               }
+             },
+
+             highlightAll: function(async, callback) {
+               var elements = document.querySelectorAll('code[class*="language-"], [class*="language-"] code, code[class*="lang-"], [class*="lang-"] code');
+
+               for (var i=0, element; element = elements[i++];) {
+                 _.highlightElement(element, async === true, callback);
+               }
+             },
+
+             highlightElement: function(element, async, callback) {
+               // Find language
+               var language, grammar, parent = element;
+
+               while (parent && !lang.test(parent.className)) {
+                 parent = parent.parentNode;
+               }
+
+               if (parent) {
+                 language = (parent.className.match(lang) || [,''])[1];
+                 grammar = _.languages[language];
+               }
+
+               if (!grammar) {
+                 return;
+               }
+
+               // Set language on the element, if not present
+               element.className = element.className.replace(lang, '').replace(/\s+/g, ' ') + ' language-' + language;
+
+               // Set language on the parent, for styling
+               parent = element.parentNode;
+
+               if (/pre/i.test(parent.nodeName)) {
+                 parent.className = parent.className.replace(lang, '').replace(/\s+/g, ' ') + ' language-' + language;
+               }
+
+               var code = element.textContent;
+
+               if(!code) {
+                 return;
+               }
+
+               code = code.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/\u00a0/g, ' ');
+
+               var env = {
+                 element: element,
+                 language: language,
+                 grammar: grammar,
+                 code: code
+               };
+
+               _.hooks.run('before-highlight', env);
+
+               if (async && self.Worker) {
+                 var worker = new Worker(_.filename);
+
+                 worker.onmessage = function(evt) {
+                   env.highlightedCode = Token.stringify(JSON.parse(evt.data), language);
+
+                   _.hooks.run('before-insert', env);
+
+                   env.element.innerHTML = env.highlightedCode;
+
+                   callback && callback.call(env.element);
+                   _.hooks.run('after-highlight', env);
+                 };
+
+                 worker.postMessage(JSON.stringify({
+                   language: env.language,
+                   code: env.code
+                 }));
+               }
+               else {
+                 env.highlightedCode = _.highlight(env.code, env.grammar, env.language)
+
+                 _.hooks.run('before-insert', env);
+
+                 env.element.innerHTML = env.highlightedCode;
+
+                 callback && callback.call(element);
+
+                 _.hooks.run('after-highlight', env);
+               }
+             },
+
+             highlight: function (text, grammar, language) {
+               return Token.stringify(_.tokenize(text, grammar), language);
+             },
+
+             tokenize: function(text, grammar, language) {
+               var Token = _.Token;
+
+               var strarr = [text];
+
+               var rest = grammar.rest;
+
+               if (rest) {
+                 for (var token in rest) {
+                   grammar[token] = rest[token];
+                 }
+
+                 delete grammar.rest;
+               }
+
+               tokenloop: for (var token in grammar) {
+                 if(!grammar.hasOwnProperty(token) || !grammar[token]) {
+                   continue;
+                 }
+
+                 var pattern = grammar[token],
+                   inside = pattern.inside,
+                   lookbehind = !!pattern.lookbehind,
+                   lookbehindLength = 0;
+
+                 pattern = pattern.pattern || pattern;
+
+                 for (var i=0; i<strarr.length; i++) { // Don’t cache length as it changes during the loop
+
+                   var str = strarr[i];
+
+                   if (strarr.length > text.length) {
+                     // Something went terribly wrong, ABORT, ABORT!
+                     break tokenloop;
+                   }
+
+                   if (str instanceof Token) {
+                     continue;
+                   }
+
+                   pattern.lastIndex = 0;
+
+                   var match = pattern.exec(str);
+
+                   if (match) {
+                     if(lookbehind) {
+                       lookbehindLength = match[1].length;
+                     }
+
+                     var from = match.index - 1 + lookbehindLength,
+                         match = match[0].slice(lookbehindLength),
+                         len = match.length,
+                         to = from + len,
+                       before = str.slice(0, from + 1),
+                       after = str.slice(to + 1);
+
+                     var args = [i, 1];
+
+                     if (before) {
+                       args.push(before);
+                     }
+
+                     var wrapped = new Token(token, inside? _.tokenize(match, inside) : match);
+
+                     args.push(wrapped);
+
+                     if (after) {
+                       args.push(after);
+                     }
+
+                     Array.prototype.splice.apply(strarr, args);
+                   }
+                 }
+               }
+
+               return strarr;
+             },
+
+             hooks: {
+               all: {},
+
+               add: function (name, callback) {
+                 var hooks = _.hooks.all;
+
+                 hooks[name] = hooks[name] || [];
+
+                 hooks[name].push(callback);
+               },
+
+               run: function (name, env) {
+                 var callbacks = _.hooks.all[name];
+
+                 if (!callbacks || !callbacks.length) {
+                   return;
+                 }
+
+                 for (var i=0, callback; callback = callbacks[i++];) {
+                   callback(env);
+                 }
+               }
+             }
+           };
+
+           var Token = _.Token = function(type, content) {
+             this.type = type;
+             this.content = content;
+           };
+
+           Token.stringify = function(o, language, parent) {
+             if (typeof o == 'string') {
+               return o;
+             }
+
+             if (Object.prototype.toString.call(o) == '[object Array]') {
+               return o.map(function(element) {
+                 return Token.stringify(element, language, o);
+               }).join('');
+             }
+
+             var env = {
+               type: o.type,
+               content: Token.stringify(o.content, language, parent),
+               tag: 'span',
+               classes: ['token', o.type],
+               attributes: {},
+               language: language,
+               parent: parent
+             };
+
+             if (env.type == 'comment') {
+               env.attributes['spellcheck'] = 'true';
+             }
+
+             _.hooks.run('wrap', env);
+
+             var attributes = '';
+
+             for (var name in env.attributes) {
+               attributes += name + '="' + (env.attributes[name] || '') + '"';
+             }
+
+             return '<' + env.tag + ' class="' + env.classes.join(' ') + '" ' + attributes + '>' + env.content + '</' + env.tag + '>';
+
+           };
+
+           if (!self.document) {
+             // In worker
+             self.addEventListener('message', function(evt) {
+               var message = JSON.parse(evt.data),
+                   lang = message.language,
+                   code = message.code;
+
+               self.postMessage(JSON.stringify(_.tokenize(code, _.languages[lang])));
+               self.close();
+             }, false);
+
+             return;
+           }
+
+           // Get current script and highlight
+           var script = document.getElementsByTagName('script');
+
+           script = script[script.length - 1];
+
+           if (script) {
+             _.filename = script.src;
+
+             if (document.addEventListener && !script.hasAttribute('data-manual')) {
+               document.addEventListener('DOMContentLoaded', _.highlightAll);
+             }
+           }
+
+           })();
+
+           /* **********************************************
+                Begin prism-markup.js
+           ********************************************** */
+
+           Prism.languages.markup = {
+             'comment': /&lt;!--[\w\W]*?-->/g,
+             'prolog': /&lt;\?.+?\?>/,
+             'doctype': /&lt;!DOCTYPE.+?>/,
+             'cdata': /&lt;!\[CDATA\[[\w\W]*?]]>/i,
+             'tag': {
+               pattern: /&lt;\/?[\w:-]+\s*(?:\s+[\w:-]+(?:=(?:("|')(\\?[\w\W])*?\1|\w+))?\s*)*\/?>/gi,
+               inside: {
+                 'tag': {
+                   pattern: /^&lt;\/?[\w:-]+/i,
+                   inside: {
+                     'punctuation': /^&lt;\/?/,
+                     'namespace': /^[\w-]+?:/
+                   }
+                 },
+                 'attr-value': {
+                   pattern: /=(?:('|")[\w\W]*?(\1)|[^\s>]+)/gi,
+                   inside: {
+                     'punctuation': /=|>|"/g
+                   }
+                 },
+                 'punctuation': /\/?>/g,
+                 'attr-name': {
+                   pattern: /[\w:-]+/g,
+                   inside: {
+                     'namespace': /^[\w-]+?:/
+                   }
+                 }
+
+               }
+             },
+             'entity': /&amp;#?[\da-z]{1,8};/gi
+           };
+
+           // Plugin to make entity title show the real entity, idea by Roman Komarov
+           Prism.hooks.add('wrap', function(env) {
+
+             if (env.type === 'entity') {
+               env.attributes['title'] = env.content.replace(/&amp;/, '&');
+             }
+           });
+
+           /* **********************************************
+                Begin prism-css.js
+           ********************************************** */
+
+           Prism.languages.css = {
+             'comment': /\/\*[\w\W]*?\*\//g,
+             'atrule': {
+               pattern: /@[\w-]+?.*?(;|(?=\s*{))/gi,
+               inside: {
+                 'punctuation': /[;:]/g
+               }
+             },
+             'url': /url\((["']?).*?\1\)/gi,
+             'selector': /[^\{\}\s][^\{\};]*(?=\s*\{)/g,
+             'property': /(\b|\B)[\w-]+(?=\s*:)/ig,
+             'string': /("|')(\\?.)*?\1/g,
+             'important': /\B!important\b/gi,
+             'ignore': /&(lt|gt|amp);/gi,
+             'punctuation': /[\{\};:]/g
+           };
+
+           if (Prism.languages.markup) {
+             Prism.languages.insertBefore('markup', 'tag', {
+               'style': {
+                 pattern: /(&lt;|<)style[\w\W]*?(>|&gt;)[\w\W]*?(&lt;|<)\/style(>|&gt;)/ig,
+                 inside: {
+                   'tag': {
+                     pattern: /(&lt;|<)style[\w\W]*?(>|&gt;)|(&lt;|<)\/style(>|&gt;)/ig,
+                     inside: Prism.languages.markup.tag.inside
+                   },
+                   rest: Prism.languages.css
+                 }
+               }
+             });
+           }
+
+           /* **********************************************
+                Begin prism-clike.js
+           ********************************************** */
+
+           Prism.languages.clike = {
+             'comment': {
+               pattern: /(^|[^\\])(\/\*[\w\W]*?\*\/|(^|[^:])\/\/.*?(\r?\n|$))/g,
+               lookbehind: true
+             },
+             'string': /("|')(\\?.)*?\1/g,
+             'class-name': {
+               pattern: /((?:class|interface|extends|implements|trait|instanceof|new)\s+)[a-z0-9_\.\\]+/ig,
+               lookbehind: true,
+               inside: {
+                 punctuation: /(\.|\\)/
+               }
+             },
+             'keyword': /\b(if|else|while|do|for|return|in|instanceof|function|new|try|catch|finally|null|break|continue)\b/g,
+             'boolean': /\b(true|false)\b/g,
+             'function': {
+               pattern: /[a-z0-9_]+\(/ig,
+               inside: {
+                 punctuation: /\(/
+               }
+             },
+             'number': /\b-?(0x[\dA-Fa-f]+|\d*\.?\d+([Ee]-?\d+)?)\b/g,
+             'operator': /[-+]{1,2}|!|=?&lt;|=?&gt;|={1,2}|(&amp;){1,2}|\|?\||\?|\*|\/|\~|\^|\%/g,
+             'ignore': /&(lt|gt|amp);/gi,
+             'punctuation': /[{}[\];(),.:]/g
+           };
+
+           /* **********************************************
+                Begin prism-javascript.js
+           ********************************************** */
+
+           Prism.languages.javascript = Prism.languages.extend('clike', {
+             'keyword': /\b(var|let|if|else|while|do|for|return|in|instanceof|function|new|with|typeof|try|catch|finally|null|break|continue)\b/g,
+             'number': /\b-?(0x[\dA-Fa-f]+|\d*\.?\d+([Ee]-?\d+)?|NaN|-?Infinity)\b/g
+           });
+
+           Prism.languages.insertBefore('javascript', 'keyword', {
+             'regex': {
+               pattern: /(^|[^/])\/(?!\/)(\[.+?]|\\.|[^/\r\n])+\/[gim]{0,3}(?=\s*($|[\r\n,.;})]))/g,
+               lookbehind: true
+             }
+           });
+
+           if (Prism.languages.markup) {
+             Prism.languages.insertBefore('markup', 'tag', {
+               'script': {
+                 pattern: /(&lt;|<)script[\w\W]*?(>|&gt;)[\w\W]*?(&lt;|<)\/script(>|&gt;)/ig,
+                 inside: {
+                   'tag': {
+                     pattern: /(&lt;|<)script[\w\W]*?(>|&gt;)|(&lt;|<)\/script(>|&gt;)/ig,
+                     inside: Prism.languages.markup.tag.inside
+                   },
+                   rest: Prism.languages.javascript
+                 }
+               }
+             });
+           }
+
+           /* **********************************************
+                Begin prism-file-highlight.js
+           ********************************************** */
+
+           (function(){
+
+           if (!self.Prism || !self.document || !document.querySelector) {
+             return;
+           }
+
+           var Extensions = {
+             'js': 'javascript',
+             'html': 'markup',
+             'svg': 'markup'
+           };
+
+           Array.prototype.slice.call(document.querySelectorAll('pre[data-src]')).forEach(function(pre) {
+             var src = pre.getAttribute('data-src');
+             var extension = (src.match(/\.(\w+)$/) || [,''])[1];
+             var language = Extensions[extension] || extension;
+
+             var code = document.createElement('code');
+             code.className = 'language-' + language;
+
+             pre.textContent = '';
+
+             code.textContent = 'Loading…';
+
+             pre.appendChild(code);
+
+             var xhr = new XMLHttpRequest();
+
+             xhr.open('GET', src, true);
+
+             xhr.onreadystatechange = function() {
+               if (xhr.readyState == 4) {
+
+                 if (xhr.status < 400 && xhr.responseText) {
+                   code.textContent = xhr.responseText;
+
+                   Prism.highlightElement(code);
+                 }
+                 else if (xhr.status >= 400) {
+                   code.textContent = '? Error ' + xhr.status + ' while fetching file: ' + xhr.statusText;
+                 }
+                 else {
+                   code.textContent = '? Error: File does not exist or is empty';
+                 }
+               }
+             };
+
+             xhr.send(null);
+           });
+
+           })();
+    </script>
+
+    <script src="js/lib/jquery.min.js"></script>
+    <script src="js/lib/jquery-ui.min.js"></script>
+    <script src="js/lib/modernizr-latest.js"></script>
+    <script src="js/mlb-popout.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            //Sample content for a popout.  You can set up event listeners for this button with the fnInitComplete option.</span><div class="b" style="margin-top: 14px;">Sample Button</div>
+            $('#sample-1').popout({ 'sName' : 'more-info' , 'sContent' : 'View the source to see a custom id assigned to this popout.' , 'sWidth' : '200px' });
+            $('#sample-2').popout({ 'sContent' : $('<span>').addClass('awesome').html('This example was generated with an object.') , 'sWidth' : '200px' });
+            $('#sample-3').popout({ 'sContent' : 'Animation is disabled on this popout.' , 'sWidth' : '200px' , 'bAnimate' : false });
+            $('#sample-5').popout({ 'sContent' : 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.' , 'sWidth' : '50%' });
+            $('#sample-6').popout({ 'sContent' : 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.' , 'sWidth' : '200px' });
+            $('#sample-7').popout({ 'sContent' : 'This popout resides in a div with an id of "popout-container".  This type of containment is useful for DOM organization.' , 'sAppendTo' : '#popout-container' , 'sWidth' : '200px' });
+            $('#sample-8').popout({ 'sContent' : 'Check the console log, you should see a successful initialization message.' , 'fnInitComplete' : function(){ console.log('Popout initialized successfully!'); }  });
+            $('#sample-9').popout({ 'sContent' : 'This popout triggers an alert dialogue box when the popout is shown.', 'fnOnShow' : function(){ alert('Popout opened') } });
+            $('#sample-10').popout({ 'sContent' : 'This popout triggers an alert dialogue box when the popout is hidden.' , 'fnOnHide' : function(){ alert('Popout closed') } });
+        });
+    </script>
+
+</body>
+</html>
