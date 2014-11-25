@@ -4,7 +4,7 @@
  *
  * Dependencies: jQuery 1.5.1+, jQuery UI 1.8+ and Modernizr ( csstransforms3d & touch capable feature detection )
  * Version 1.0.1
- * Author chris.connelly@mlb.com
+ * Author @Cornally
  *
  *  Bind to your trigger element to trigger the generation of a popout.
  *
